@@ -57,6 +57,17 @@ app.get('/api/task', async(req, res) => {
     res.status(200).json({tasks})
 })
 
+app.delete('/api/task/:task_id', async(req, res) => {
+    let taskId = req.params.task_id
+    const task = await Task.findByIdAndDelete(taskId)
+    taskId = task.id_previous
+    while (taskId != null){
+        let task = await Task.findByIdAndDelete(taskId)
+        taskId = task.id_previous
+    }
+    res.status(200).json({"borrado":"true"})
+})
+
 app.put('/api/task/:task_id', async(req, res) => {
     let taskId = req.params.task_id
     let update = req.body
