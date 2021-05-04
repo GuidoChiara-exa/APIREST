@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const Proceso = require('./models/proceso')
 const Task = require('./models/task')
+const { json } = require('body-parser')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -15,7 +16,7 @@ app.use(bodyParser.json())
 
 
 //metodo post mediante el cual se publica un documento de task en la BDD
-app.post('/api/task', (req, res) => {
+app.post('/api/task', async(req, res) => {
     console.log('POST /api/task')
     console.log(req.body)
 
@@ -49,6 +50,49 @@ app.get('/api/task/:project', async(req, res) => {
 
     const tasks = await Task.find({"actual" : "true", "project" : projectId})
     res.status(200).json({tasks})
+})
+
+app.get('/api/task', async(req, res) => {
+    const tasks = await Task.find({})
+    res.status(200).json({tasks})
+})
+
+app.put('/api/task/:task_id', async(req, res) => {
+    let taskId = req.params.task_id
+    let update = req.body
+
+    //obtengo el documento
+    const taskUpdate = await Task.findById(taskId)
+   
+    let newTask = new Task()
+
+    newTask.project = taskUpdate.project
+    newTask.name = taskUpdate.name
+    newTask.nickname = taskUpdate.nickname
+    newTask.date = taskUpdate.date 
+    newTask.description = taskUpdate.description
+    newTask.associated_message = taskUpdate.associates_message
+    newTask.subtasks = taskUpdate.subtasks 
+    newTask.expiration_date = taskUpdate.expiration_date
+    newTask.color = taskUpdate.color
+    newTask.priority = taskUpdate.priority
+    newTask.state = taskUpdate.state
+    newTask.teammember = taskUpdate.teammember
+    newTask.id_previous = taskUpdate.id_previous 
+    newTask.actual = false //porque es un estado anterior
+
+    newTask.save((err, taskSaved) => {
+        if(err) res.status(500).send({message: `Error al actualizar en la base de datos: ${err}`})
+        //res.status(200).json({taskSaved})
+        update.id_previous = taskSaved._id  
+    })
+    
+    taskUpdate.findByIdAndUpdate(taskId, update, (err,taskUpdated) => {
+        if(err) res.status(500).send({message: `Error al actualizar en la base de datos: ${err}`})
+        res.status(200).json({taskUpdated})
+    })
+    
+
 })
 
 app.get('/api/proceso', async(req, res) => {
