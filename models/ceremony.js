@@ -13,7 +13,7 @@ const ceremonySchema = Schema( {
     },
 
     date:{
-        type: date,
+        type: String,
         unique: true,
     },
     

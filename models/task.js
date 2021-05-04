@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const taskSchema = Schema( {
    
-    proyect:{
+    project:{
         type: String
     },
 
@@ -17,7 +17,7 @@ const taskSchema = Schema( {
     },
     
     date:{
-        type: date,
+        type: String,
     },
     
     description:{
@@ -29,14 +29,12 @@ const taskSchema = Schema( {
     },
     
     subtasks:{
-        type: [{
-            id_task : String
-        }],
-        required = false
+        type: String,
+        required : false
     },
     
     expiration_date:{
-        type: date
+        type: String
     },
     
     color:{

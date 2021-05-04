@@ -4,29 +4,30 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const Proceso = require('./models/proceso')
+const Task = require('./models/task')
 
 const app = express()
 const port = process.env.PORT || 3000
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 
-//aqui
-//const Task = require('./models/task')
-//aqui
-/*
+
+
+
+//metodo post mediante el cual se publica un documento de task en la BDD
 app.post('/api/task', (req, res) => {
-    console.log('POST /api/taskModel')
+    console.log('POST /api/task')
     console.log(req.body)
 
     let task = new Task()
 
-    task.proyect = req.body.proyect
+    task.project = req.body.project
     task.name = req.body.name
     task.nickname = req.body.nickname
     task.date = req.body.date //mmm mejor que la pasen ellos, porque el año pasado creaba horas random
     task.description = req.body.description
-    task.associates_message = req.body.associates_message
-    task.subtasks = req.body.subtaks //lo deberian pasar ellos? //necesitan saber los ids
+    task.associated_message = req.body.associates_message
+    task.subtasks = req.body.subtasks //lo deberian pasar ellos? //necesitan saber los ids
     task.expiration_date = req.body.expiration_date
     task.color = req.body.color
     task.priority = req.body.priority
@@ -37,9 +38,18 @@ app.post('/api/task', (req, res) => {
 
     task.save((err, taskSaved) => {
         if(err) res.status(500).send({message: `Error al salvar en la base de datos: ${err}`})
-        res.status(200).send({taskStored})
+        res.status(200).json({taskSaved})
     })
-})*/
+})
+
+//metodo get, que devulve las tareas actuales del proyecto "project"
+//el parametro "project" no puede tener espacios
+app.get('/api/task/:project', async(req, res) => {
+    let projectId = req.params.project
+
+    const tasks = await Task.find({"actual" : "true", "project" : projectId})
+    res.status(200).json({tasks})
+})
 
 app.get('/api/proceso', async(req, res) => {
     const Procesos = await Proceso.find({})
