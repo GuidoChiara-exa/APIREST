@@ -11,9 +11,10 @@ app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 
 //aqui
-const Task = require('./models/taskModel')
+//const Task = require('./models/task')
 //aqui
-app.post('/api/taskModel', (req, res) => {
+/*
+app.post('/api/task', (req, res) => {
     console.log('POST /api/taskModel')
     console.log(req.body)
 
@@ -35,17 +36,19 @@ app.post('/api/taskModel', (req, res) => {
     task.actual = true //porque esta creando una
 
     task.save((err, taskSaved) => {
-        if(err) res.status(500).send({message: 'Error al salvar en la base de datos: ${err}'})
+        if(err) res.status(500).send({message: `Error al salvar en la base de datos: ${err}`})
         res.status(200).send({taskStored})
     })
-})
+})*/
 
-app.get('/api/proceso', (req, res)=> {
-    res.send(200, {product: []})
+app.get('/api/proceso', async(req, res) => {
+    const Procesos = await Proceso.find({})
+    res.status(200).json({Procesos})
 })
 
 app.get('/api/proceso/:id', (req, res)=> {
-    res.send({message:'hola mundo'})
+    const Procesos = Proceso.findById(req.params.id)
+    res.status(200).json({Procesos})
 })
 
 app.post('/api/proceso',(req, res)=>{
@@ -54,7 +57,7 @@ app.post('/api/proceso',(req, res)=>{
     proceso.tiempoCeremonia = req.body.tiempoCeremonia
     proceso.save((err, procesoStore)=>{
         if (err) res.status(500).send({message:'Error al guardar'})
-        res.status(200).send({proceso: procesoStore})
+        res.status(200).json({procesoStore})
     })
 })
 

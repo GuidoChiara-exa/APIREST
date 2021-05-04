@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const taskSchema = Schema( {
    
     proyect:{
-        type = String
+        type: String
     },
 
     name:{
