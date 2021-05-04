@@ -60,6 +60,7 @@ app.get('/api/task', async(req, res) => {
 app.put('/api/task/:task_id', async(req, res) => {
     let taskId = req.params.task_id
     let update = req.body
+   
 
     //obtengo el documento
     const taskUpdate = await Task.findById(taskId)
@@ -81,16 +82,17 @@ app.put('/api/task/:task_id', async(req, res) => {
     newTask.id_previous = taskUpdate.id_previous 
     newTask.actual = false //porque es un estado anterior
 
-    newTask.save((err, taskSaved) => {
+    await newTask.save((err, taskSaved) => {
         if(err) res.status(500).send({message: `Error al actualizar en la base de datos: ${err}`})
-        //res.status(200).json({taskSaved})
-        update.id_previous = taskSaved._id  
+        update.id_previous = taskSaved._id 
+        //res.status(200).json({taskSaved}) 
+        Task.findByIdAndUpdate(taskId, update, (err,taskUpdated) => {
+            if(err) res.status(500).send({message: `Error al actualizar en la base de datos: ${err}`})
+            res.status(200).json({update})
+        })
     })
+
     
-    taskUpdate.findByIdAndUpdate(taskId, update, (err,taskUpdated) => {
-        if(err) res.status(500).send({message: `Error al actualizar en la base de datos: ${err}`})
-        res.status(200).json({taskUpdated})
-    })
     
 
 })
