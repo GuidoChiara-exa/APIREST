@@ -8,7 +8,11 @@ const Task = require('./models/task')
 const Event = require('./models/event')
 const Ceremony = require('./models/ceremony')
 const { json } = require('body-parser')
+<<<<<<< HEAD
 const { events } = require('./models/proceso')
+=======
+const teammemberCtrl = require ('./controllers/teammemberController')
+>>>>>>> f349af52c3e5d1834a9338dc38748b170f25b64e
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -35,29 +39,12 @@ app.put('/api/task/:task_id', taskCtrl.putTask)
 
 //.....Procesos.....
 
-app.get('/api/proceso', async(req, res) => {
-    const Procesos = await Proceso.find({})
-    res.status(200).json({Procesos})
-})
 
-app.get('/api/proceso/:id', (req, res)=> {
-    const Procesos = Proceso.findById(req.params.id)
-    res.status(200).json({Procesos})
-})
 
-app.post('/api/proceso',(req, res)=>{
-    let proceso = new Proceso()
-    proceso.name = req.body.name
-    proceso.tiempoCeremonia = req.body.tiempoCeremonia
-    proceso.save((err, procesoStore)=>{
-        if (err) res.status(500).send({message:'Error al guardar'})
-        res.status(200).json({procesoStore})
-    })
-})
+app.get('/api/teammember', teammemberCtrl.getTeammembers )
+app.get('/api/teammember/:name', teammemberCtrl.getTeammember )
+app.post('/api/teammember', teammemberCtrl.postTeammember)
 
-app.put('/api/proceso/:id', (req, res)=> {
-    res.send({message:'hola mundo'})
-})
 
 
 //.....Ceremonias.....
