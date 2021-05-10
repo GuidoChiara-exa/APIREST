@@ -8,11 +8,11 @@ const Task = require('./models/task')
 const Event = require('./models/event')
 const Ceremony = require('./models/ceremony')
 const { json } = require('body-parser')
-<<<<<<< HEAD
-const { events } = require('./models/proceso')
-=======
+
 const teammemberCtrl = require ('./controllers/teammemberController')
->>>>>>> f349af52c3e5d1834a9338dc38748b170f25b64e
+const taskCtrl = require ('./controllers/taskController')
+const ceremonyCtrl = require ('./controllers/ceremonyController')
+const eventCtrl = require ('./controllers/eventController')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -30,7 +30,7 @@ app.post('/api/task', taskCtrl.postTask)
 //el parametro "project" no puede tener espacios
 app.get('/api/task/:project', taskCtrl.getTaskActual)
 
-app.get('/api/task', task.Ctrl.getTask)
+app.get('/api/task', taskCtrl.getTask)
 
 app.delete('/api/task/:task_id', taskCtrl.deleteTask)
 

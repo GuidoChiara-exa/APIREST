@@ -1,6 +1,6 @@
 'use strict'
 
-const Event = require('./models/event')
+const Event = require('../models/event')
 const { json } = require('body-parser')
 
 async function postEvent(req, res){

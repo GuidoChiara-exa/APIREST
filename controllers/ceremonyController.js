@@ -1,6 +1,6 @@
 'use strict'
 
-const Ceremony = require('./models/ceremony')
+const Ceremony = require('../models/ceremony')
 const { json } = require('body-parser')
 
 async function postCeremony(req, res){
