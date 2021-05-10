@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const Proceso = require('./models/proceso')
 const Task = require('./models/task')
 const { json } = require('body-parser')
+const teammemberCtrl = require ('./controllers/teammemberController')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -108,29 +109,12 @@ app.put('/api/task/:task_id', async(req, res) => {
 
 })
 
-app.get('/api/proceso', async(req, res) => {
-    const Procesos = await Proceso.find({})
-    res.status(200).json({Procesos})
-})
 
-app.get('/api/proceso/:id', (req, res)=> {
-    const Procesos = Proceso.findById(req.params.id)
-    res.status(200).json({Procesos})
-})
 
-app.post('/api/proceso',(req, res)=>{
-    let proceso = new Proceso()
-    proceso.name = req.body.name
-    proceso.tiempoCeremonia = req.body.tiempoCeremonia
-    proceso.save((err, procesoStore)=>{
-        if (err) res.status(500).send({message:'Error al guardar'})
-        res.status(200).json({procesoStore})
-    })
-})
+app.get('/api/teammember', teammemberCtrl.getTeammembers )
+app.get('/api/teammember/:name', teammemberCtrl.getTeammember )
+app.post('/api/teammember', teammemberCtrl.postTeammember)
 
-app.put('/api/proceso/:id', (req, res)=> {
-    res.send({message:'hola mundo'})
-})
 
 mongoose.connect('mongodb+srv://Guichi:hola1234@cluster0.clby5.gcp.mongodb.net/apiBD?retryWrites=true&w=majority',(err, res)=>{
     if(err) throw err
