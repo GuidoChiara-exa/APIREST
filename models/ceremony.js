@@ -28,12 +28,12 @@ const ceremonySchema = Schema( {
 
     reminder:{
         type: String,
-        require = false
+        required : false
     },
     
     chat_text:{
         type: String,
-        require = false
+        required : false
     }
 })
 

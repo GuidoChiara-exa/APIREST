@@ -3,6 +3,7 @@
 const Ceremony = require('../models/ceremony')
 const { json } = require('body-parser')
 
+
 async function postCeremony(req, res){
    
     let ceremony = new Ceremony()

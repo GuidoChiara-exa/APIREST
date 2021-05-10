@@ -2,7 +2,7 @@
 const mongoose = require ('mongoose')
 const Schema = mongoose.Schema
 
-const teammemberSchema = Schema( {
+const teammemberSchema = Schema({
 
     
     name:{ type: String,

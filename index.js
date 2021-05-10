@@ -3,10 +3,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-const Proceso = require('./models/proceso')
-const Task = require('./models/task')
-const Event = require('./models/event')
-const Ceremony = require('./models/ceremony')
 const { json } = require('body-parser')
 
 const teammemberCtrl = require ('./controllers/teammemberController')
