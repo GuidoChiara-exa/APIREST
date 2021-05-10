@@ -3,18 +3,13 @@ const mongoose = require ('mongoose')
 const Schema = mongoose.Schema
 
 const ceremonySchema = Schema( {
-    id:{ 
-        type: String,
-        unique: true
-    },
-    
+
     project:{
         type: String
     },
 
     date:{
-        type: String,
-        unique: true,
+        type: String
     },
     
     type:{
@@ -30,7 +25,7 @@ const ceremonySchema = Schema( {
             id_teammember : String
              }]
     },
-    
+
     reminder:{
         type: String,
         require = false
