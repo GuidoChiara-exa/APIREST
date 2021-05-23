@@ -29,7 +29,7 @@ const taskSchema = Schema( {
     },
     
     subtasks:{
-        type: String,
+        type: [{}],
         required : false
     },
     

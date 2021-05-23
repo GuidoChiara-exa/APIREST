@@ -21,9 +21,7 @@ const ceremonySchema = Schema( {
     },
     
     participants:{
-        type: [{
-            id_teammember : String
-             }]
+        type: [{}]
     },
 
     reminder:{

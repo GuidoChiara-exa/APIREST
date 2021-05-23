@@ -9,6 +9,7 @@ const teammemberCtrl = require ('./controllers/teammemberController')
 const taskCtrl = require ('./controllers/taskController')
 const ceremonyCtrl = require ('./controllers/ceremonyController')
 const eventCtrl = require ('./controllers/eventController')
+const viewid_nicknameCtrl = require ('./controllers/viewidnicknameController')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -67,8 +68,10 @@ app.get('/api/teammember/:name', teammemberCtrl.getTeammember )
 
 app.post('/api/teammember', teammemberCtrl.postTeammember)
 
-
-
+//.....Lauta.....
+app.get('/api/viewid_nickname/:id', viewid_nicknameCtrl.getview)
+app.get('/api/viewtoda', viewid_nicknameCtrl.getviewtoda)
+app.post('/api/viewid_nickname', viewid_nicknameCtrl.postview)
 
 
 mongoose.connect('mongodb+srv://Guichi:hola1234@cluster0.clby5.gcp.mongodb.net/apiBD?retryWrites=true&w=majority',(err, res)=>{
